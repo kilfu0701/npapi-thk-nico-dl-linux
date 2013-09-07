@@ -1,0 +1,46 @@
+{
+  "name": "__MSG_extName__",
+  "version": "0.1.6",
+  "manifest_version": 2,
+  "description": "__MSG_extDescription__",
+  "default_locale": "zh_TW",
+  "icons": {
+    "64": "images/icon_64.png",
+    "128": "images/icon_128.png"
+  },
+  "background": { "page": "html/background.html" },
+  "options_page": "html/options.html",
+  "permissions": [
+    "tabs",
+    "cookies",
+    "geolocation",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "management",
+    "contextMenus",
+    "http://www.nicovideo.jp/*",
+    "http://flapi.nicovideo.jp/*",
+    //"file:///*",
+    "http://*/*"
+  ],
+  "browser_action": {
+    "default_icon": "images/icon_64.png",
+    "default_title": "__MSG_extName__"
+  },
+  "content_scripts": [{
+    "js": [ "js/lib/jquery-1.7.2.min.js", "js/i18n.js", "js/THK.js", "js/THK.Nico.js", "js/THK.DB.js", "js/exec.js" ],
+    "matches": [ "http://www.nicovideo.jp/watch/*" ],
+    //"matches": ["<all_urls>"],
+    "run_at": "document_end"
+  }],
+  "plugins": [
+    { "path": "plugin/libcurld.dll" },
+    { "path": "plugin/thk-nico-dl.dll" },
+    { "path": "plugin/npapi-thk-nico-dl-32.so" }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "update_url": "http://fs.tkafu.cc/nicoDLM.xml",
+  "homepage_url": "https://github.com/kilfu0701/nicoDLM",
+  "minimum_chrome_version": "23.0"
+}

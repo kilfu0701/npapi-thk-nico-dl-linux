@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link type="text/css" rel="StyleSheet" href="/css/style.css">
+<link type="text/css" rel="StyleSheet" href="/css/tab.webfx.css">
+<link type="text/css" rel="StyleSheet" href="/css/options.css">
+<link type="text/css" rel="StyleSheet" href="/css/cbdb-search-form.css">
+<link type="text/css" rel="StyleSheet" href="/css/markdown.css">
+
+<script type="text/javascript" src="/js/lib/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/lib/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/lib/showdown.js"></script>
+<script type="text/javascript" src="/js/lib/tabpane.js"></script>
+
+<script type="text/javascript" src="/js/i18n.js"></script>
+<script type="text/javascript" src="/js/THK.js"></script>
+<script type="text/javascript" src="/js/THK.Nico.js"></script>
+<script type="text/javascript" src="/js/THK.DB.js"></script>
+<!--script type="text/javascript" src="/js/THK.Validate.js"></script-->
+<script type="text/javascript" src="/js/options.js"></script>
+
+</head>
+<body>
+    <div class="tab-pane" id="tab-pane-1">
+        <div class="tab-page">
+            <h2 class="tab" id="dlist">下載清單(DL List)</h2>
+            <div class="clearfix">
+                <div id="dl_list">
+                    <div id="toolbar" class="clearfix">
+                        <div class="clearfix">
+                            <div id="search-block">
+                                <form id="search-form" action="/options.html" name="search_form" method="POST">
+                                    <input type="text" id="search_text" />
+                                    <input type="button" value="Search" id="search_btn" />
+                                </form>
+                            </div>
+                            <div id="info-block">                
+                                <span id="videos">影片數：</span><span id="video_cur">--</span>/<span id="video_all">--</span>
+                                <span>|</span>
+                                <button id="clear_all">清除所有下載清單</button>
+                                <span>|</span>
+                                <input type="button" id="export" value="Export"><span id="export_link"></span>
+                                <span>|</span>
+                                <input type="button" id="import" value="Import" disabled="true"></span><input type="file" id="import_file">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <ul>
+                            <!-- Here is Video Data Lists -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-page">
+            <h2 class="tab" id="general">一般設定(General)</h2>
+            <div id="opt_gen" class="clearfix">
+                <div class="clearfix">
+                     <div id="download_dir">下載檔案目錄位置:</div><input type="text" name="download_dir" value="" size="35" id="download_dir_input">
+                     <input type="button" id="download_dir_btn" value="變更...">
+                </div>
+                <div class="clearfix">
+                    <div id="file_format">檔案命名格式</div><input type="text" name="file_format" value="" size="35" id="file_format_input">
+                </div>
+                <div class="clearfix">
+                    <div id="if_file_exist">影片檔存在時:</div>
+                    <select id="save_action">
+                        <option id="overwrite" value="1">覆蓋該檔案</option>
+                        <option id="saveNew" value="0">另存新檔</option>
+                    </select>
+                </div>
+                <div class="clearfix">
+                    <div id="comment_file_format">字幕檔案命名格式</div><input type="text" name="comment_file_format" value="" size="35" id="comment_file_format_input">
+                </div>
+                <div class="clearfix">
+                    <div id="comment_lang">字幕檔下載</div>
+                    <input type="checkbox" name="comment_lang_n" id="comment_lang_jp"><span id="comment_lang_jp_span">JP</span>
+                    <input type="checkbox" name="comment_lang_n" id="comment_lang_en"><span id="comment_lang_en_span">EN</span>
+                    <input type="checkbox" name="comment_lang_n" id="comment_lang_tw"><span id="comment_lang_tw_span">TW</span>
+                </div>
+                <div class="clearfix">
+                    <div id="download_quality_mode">下載檔案畫質</div>
+                    <select id="dl_quality_action">
+                        <option id="high_quality" value="1">只在高畫質時才啟動下載</option>
+                        <option id="low_quality" value="0">低畫質時仍強制下載</option>
+                    </select>
+                </div>
+                <button class="opt_btn">儲存 [Save]</button>
+            </div>
+            
+        </div>
+        <div class="tab-page">
+            <h2 class="tab" id="langs">語系(Language)</h2>
+            <div id="opt_lang" class="clearfix">
+                <span id="lang_desc"></span><br>
+                <input type="radio" name="lang" value="default" checked /><span id="default">預設值(default)</span><br>
+                <input type="radio" name="lang" value="en" /><span id="en">英文(en)</span><br>
+                <input type="radio" name="lang" value="zh-TW" /><span id="zh-TW">繁中(zh-TW)</span><br>
+                <input type="radio" name="lang" value="ja-JP" /><span id="ja-JP">日文(ja-JP)</span><br>
+                <button class="opt_btn">儲存 [Save]</button>
+            </div>
+        </div>
+        <div class="tab-page">
+            <h2 class="tab" id="abouts">About nicoDLM</h2>
+            <div id="about_nicoDLM" class="clearfix">
+                <div class="markdown-body"></div>
+            </div>
+        </div>
+   </div>
+   
+    <div id="save"></div>
+    
+    <div id="search_result">
+        <div id="close_search_result"><img src="/images/cancel.png" id="close_search_btn"></div>
+        <div id="search_result_content"></div>
+    </div>
+
+    <div id="edit_window">
+        <div id="close_edit_window"><img src="/images/cancel.png" width="20" height="20" id="close_edit_btn"></div>
+        <div id="edit_content"></div>
+    </div>
+    
+</body> 
+</html>
