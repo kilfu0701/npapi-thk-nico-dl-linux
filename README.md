@@ -1,4 +1,6 @@
-## npapi thk build for debian/ubuntu
+===== nicoDLM npapi plugin for Linux =====
+
+** npapi thk build for debian/ubuntu **
 sudo apt-get install g++
 sudo apt-get install g++-multilib
 sudo apt-get install libc6-dbg libc6-dev-i386
@@ -6,13 +8,13 @@ sudo apt-get install libx11-dev
 sudo apt-get install libgtk2.0-dev
 sudo apt-get install libcurl4-gnutls-dev
 
-## IF curl build error on 64-bit OS. See about ./misc/ folder.
+** IF curl build error on 64-bit OS. See about ./misc/ folder. **
 cd /usr/include/curl/
 sudo mv curlbuild.h curlbuild-64.h
 sudo cp curlbuild-64.h curlbuild-32.h
 sudo sed -i 's/#define CURL_SIZEOF_LONG 8/#define CURL_SIZEOF_LONG 4/g' curlbuild-32.h
 
-## add new a file 'curlbuild.h'
+** add new a file 'curlbuild.h' **
 vim curlbuild.h
 
 ---FILE_CONTENT<<<
@@ -30,9 +32,11 @@ vim curlbuild.h
 <<< ---;
 
 
-## how to build
-cd ~
-wget -c http://tkafu.cc/f/npapi-thk-nico-dl.tar
-tar zxvf npapi-thk-nico-dl.tar
+** how to build **
+git https://github.com/kilfu0701/npapi-thk-nico-dl-linux.git
 cd npapi-thk-nico-dl
 make
+
+** test in chrome **
+Open chrome extension manager, and enable developer mode.
+Select load from unpack files and choose /test/ folder.
